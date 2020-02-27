@@ -136,7 +136,26 @@
        * @param {string} eventName - name of the event.
        */
       emit: function (eventName, context) {
-        var listeners = that.listeners[eventName] || [];
+        var listeners = [];
+        for (name in that.listeners) {
+          if (that.listeners.hasOwnProperty(name)) {
+            if (name === eventName) {
+              //TODO: this lib should definitely use > ES5
+              Array.prototype.push.apply(listeners, that.listeners[name]);
+            }
+            
+            if (name.indexOf('*') >= 0) {
+              var newName = name.replace(/\*\*/, '([^.]+.?)+');
+              newName = newName.replace(/\*/g, '[^.]+');
+              
+              var match = eventName.match(newName);
+              if (match && eventName === match[0]) {
+                Array.prototype.push.apply(listeners, that.listeners[name]);
+              }
+            }
+          }
+        }
+
         var parentArgs = arguments;
 
         context = context || this;
