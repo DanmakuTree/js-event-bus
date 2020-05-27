@@ -1,3 +1,10 @@
+
+# THIS IS NOT WORK
+
+<p style="font-size:42px">THIS IS NOT WORK</p>
+
+This fork is for archived our modified.
+
 # js-event-bus
 Simple Event Bus library built for any JavaScript application.
 
